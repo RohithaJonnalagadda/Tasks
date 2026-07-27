@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>L'ÉTOILE — Haute Cuisine</title>
+  
+  <!-- Premium Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  
+  <!-- External CSS File -->
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Core Reset & Variables */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg-dark: #09080a;
+  --card-bg: rgba(22, 18, 23, 0.75);
+  --gold-primary: #e2b166;
+  --gold-light: #f0c37f;
+  --gold-glow: rgba(226, 177, 102, 0.35);
+  --text-main: #f5efe9;
+  --text-muted: #a69e95;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Ambient Background Orbs */
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(140px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+body::before {
+  width: 600px;
+  height: 600px;
+  top: -150px;
+  left: -150px;
+  background: radial-gradient(circle, rgba(226, 177, 102, 0.22) 0%, rgba(0, 0, 0, 0) 70%);
+  animation: pulseGlow 9s infinite alternate ease-in-out;
+}
+
+body::after {
+  width: 700px;
+  height: 700px;
+  bottom: -200px;
+  right: -200px;
+  background: radial-gradient(circle, rgba(140, 75, 105, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
+  animation: pulseGlow 12s infinite alternate-reverse ease-in-out;
+}
+
+@keyframes pulseGlow {
+  0% { transform: scale(1) translateY(0); opacity: 0.6; }
+  100% { transform: scale(1.3) translateY(50px); opacity: 0.95; }
+}
+
+/* Ambient Light Ray Sweep */
+.light-ray {
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    115deg, 
+    transparent 42%, 
+    rgba(226, 177, 102, 0.03) 48%, 
+    rgba(255, 235, 200, 0.08) 50%, 
+    rgba(226, 177, 102, 0.03) 52%, 
+    transparent 58%
+  );
+  transform: rotate(-15deg);
+  pointer-events: none;
+  z-index: 1;
+  animation: lightSweep 15s infinite linear;
+}
+
+@keyframes lightSweep {
+  0% { transform: translateY(-30%) rotate(-15deg); }
+  100% { transform: translateY(30%) rotate(-15deg); }
+}
+
+.navbar, .hero-section, .menu-section, .modal {
+  position: relative;
+  z-index: 10;
+}
+
+/* Glassmorphic Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 60px;
+  background: rgba(12, 10, 13, 0.8);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(226, 177, 102, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-family: 'Cinzel', serif;
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: 4px;
+  background: linear-gradient(135deg, #ffffff 20%, var(--gold-light) 60%, var(--gold-primary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 20px rgba(226, 177, 102, 0.3);
+}
+
+.navbar nav a {
+  margin-left: 25px;
+  text-decoration: none;
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+}
+
+.navbar nav a:hover {
+  color: var(--gold-primary);
+  text-shadow: 0 0 10px var(--gold-glow);
+}
+
+.btn-reserve {
+  border: 1px solid var(--gold-primary);
+  color: var(--gold-primary) !important;
+  padding: 10px 24px;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+}
+
+.btn-reserve:hover {
+  background: var(--gold-primary);
+  color: #000 !important;
+  box-shadow: 0 0 25px var(--gold-glow);
+}
+
+/* Hero Section */
+.hero-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 60px 20px;
+  min-height: 75vh;
+}
+
+.hero-text {
+  max-width: 520px;
+}
+
+.hero-text h1 {
+  font-family: 'Cinzel', serif;
+  font-size: 48px;
+  line-height: 1.2;
+  color: #fff;
+  margin-bottom: 18px;
+}
+
+.hero-text p {
+  color: var(--text-muted);
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+/* Search Box */
+.search-box {
+  display: flex;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(226, 177, 102, 0.35);
+  border-radius: 40px;
+  padding: 6px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.search-box input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 12px 20px;
+  color: #fff;
+  font-size: 15px;
+}
+
+.search-btn {
+  background: linear-gradient(135deg, var(--gold-light), var(--gold-primary));
+  border: none;
+  color: #000;
+  font-weight: 700;
+  padding: 0 28px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.search-btn:hover {
+  box-shadow: 0 0 20px var(--gold-glow);
+}
+
+/* Diamond Canvas Gallery */
+.gallery-container {
+  position: relative;
+  width: 520px;
+  height: 480px;
+  flex-shrink: 0;
+}
+
+.diamond-box {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  transform: rotate(45deg);
+  border: 3px solid var(--gold-primary);
+  border-radius: 24px;
+  overflow: hidden;
+  background: #110e12;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 15px rgba(226, 177, 102, 0.2);
+  transition: all 0.4s ease;
+}
+
+.diamond-box:hover {
+  border-color: #fff;
+  box-shadow: 0 0 35px var(--gold-glow);
+}
+
+.diamond-inner {
+  width: 100%;
+  height: 100%;
+}
+
+.diamond-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: rotate(-45deg) scale(1.42);
+  transition: transform 0.4s ease;
+}
+
+.diamond-box:hover .diamond-inner img {
+  transform: rotate(-45deg) scale(1.7);
+}
+
+.pos-top-left { top: 10px; left: 80px; }
+.pos-top-right { top: 10px; right: 80px; }
+.pos-center {
+  width: 200px;
+  height: 200px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  z-index: 5;
+}
+.pos-center:hover {
+  transform: translate(-50%, -50%) rotate(45deg) scale(1.06);
+}
+.pos-bottom-left { bottom: 10px; left: 80px; }
+.pos-bottom-right { bottom: 10px; right: 80px; }
+
+/* Menu Section */
+.menu-section {
+  max-width: 1300px;
+  margin: 60px auto;
+  padding: 0 20px;
+}
+
+.section-title {
+  font-family: 'Cinzel', serif;
+  text-align: center;
+  font-size: 36px;
+  color: #fff;
+  margin-bottom: 30px;
+  letter-spacing: 2px;
+}
+
+/* Category Filter Buttons */
+.filter-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.filter-btn {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(226, 177, 102, 0.25);
+  color: var(--text-muted);
+  padding: 10px 24px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.filter-btn.active, .filter-btn:hover {
+  background: var(--gold-primary);
+  color: #000;
+  border-color: var(--gold-primary);
+  box-shadow: 0 0 20px var(--gold-glow);
+}
+
+/* Food Grid Layout */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 30px;
+}
+
+/* Food Cards */
+.food-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(226, 177, 102, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.food-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--gold-primary);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), 0 0 25px var(--gold-glow);
+}
+
+.food-card-img-wrapper {
+  position: relative;
+  height: 190px;
+  overflow: hidden;
+}
+
+.food-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.food-card:hover img {
+  transform: scale(1.1);
+}
+
+.badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: var(--gold-primary);
+  color: #000;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 12px;
+  letter-spacing: 0.5px;
+}
+
+.food-info {
+  padding: 20px;
+}
+
+.food-info h3 {
+  font-size: 18px;
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+.food-info p {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin-bottom: 16px;
+  min-height: 36px;
+}
+
+.food-info .price {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--gold-primary);
+}
+
+/* Modal Popup Window */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(15px);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #141015;
+  border: 1px solid rgba(226, 177, 102, 0.3);
+  box-shadow: 0 0 50px rgba(226, 177, 102, 0.2);
+  padding: 30px;
+  border-radius: 24px;
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+  position: relative;
+  animation: zoomIn 0.3s ease-out;
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.img-zoom-wrapper {
+  overflow: hidden;
+  border-radius: 16px;
+  height: 280px;
+  margin-bottom: 18px;
+  position: relative;
+  cursor: crosshair;
+  background-color: #000;
+}
+
+.img-zoom-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform-origin: center center;
+  transition: transform 0.1s ease-out;
+}
+
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 20px;
+  font-size: 30px;
+  cursor: pointer;
+  color: var(--text-muted);
+}
+
+.close-btn:hover { color: #fff; }
+
+.modal-price {
+  display: block;
+  margin-top: 10px;
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--gold-primary);
+}
+  </style>
+</head>
+<body>
+
+  <!-- Background Lighting Effect -->
+  <div class="light-ray"></div>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">L'ÉTOILE</div>
+    <nav>
+      <a href="#">HOME</a>
+      <a href="#menu">MENU</a>
+      <a href="#">EXPERIENCE</a>
+      <a href="#" class="btn-reserve">RESERVE TABLE</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-text">
+      <h1>Artisanal Flavors, Elevated.</h1>
+      <p>Step into an atmosphere of dark luxury where fine ingredients meticulously blend with culinary artistry.</p>
+      
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search dish (e.g. Pizza, Mojito, Burger)..." onkeyup="filterSearch()">
+        <button class="search-btn">Search</button>
+      </div>
+    </div>
+
+    <!-- Diamond Canvas Gallery Showcase -->
+    <div class="gallery-container">
+      <div class="diamond-box pos-top-left" onclick="openModal('https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=800&q=80', 'Margherita Pizza', '$14.99')">
+        <div class="diamond-inner">
+          <img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=600&q=80" alt="Margherita Pizza">
+        </div>
+      </div>
+
+      <div class="diamond-box pos-top-right" onclick="openModal('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80', 'Cheese Burger', '$12.99')">
+        <div class="diamond-inner">
+          <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80" alt="Cheese Burger">
+        </div>
+      </div>
+
+      <div class="diamond-box pos-center" onclick="openModal('https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?auto=format&fit=crop&w=800&q=80', 'Mojito Classic', '$9.99')">
+        <div class="diamond-inner">
+          <img src="https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?auto=format&fit=crop&w=600&q=80" alt="Mojito">
+        </div>
+      </div>
+
+      <div class="diamond-box pos-bottom-left" onclick="openModal('https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=800&q=80', 'Truffle Fries', '$8.99')">
+        <div class="diamond-inner">
+          <img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=600&q=80" alt="Truffle Fries">
+        </div>
+      </div>
+
+      <div class="diamond-box pos-bottom-right" onclick="openModal('https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=800&q=80', 'Choco Lava Cake', '$11.49')">
+        <div class="diamond-inner">
+          <img src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=600&q=80" alt="Chocolate Cake">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Expanded Menu Section -->
+  <section class="menu-section" id="menu">
+    <h2 class="section-title">The Master Menu</h2>
+    
+    <!-- Category Filter Tabs -->
+    <div class="filter-buttons">
+      <button class="filter-btn active" onclick="filterCategory('all', event)">All (24)</button>
+      <button class="filter-btn" onclick="filterCategory('pizza', event)">Pizzas</button>
+      <button class="filter-btn" onclick="filterCategory('burger', event)">Burgers</button>
+      <button class="filter-btn" onclick="filterCategory('drink', event)">Drinks</button>
+      <button class="filter-btn" onclick="filterCategory('starter', event)">Starters</button>
+      <button class="filter-btn" onclick="filterCategory('dessert', event)">Desserts</button>
+    </div>
+
+    <!-- Food Cards Grid -->
+    <div class="menu-grid" id="menuGrid">
+
+      <!-- PIZZAS -->
+      <div class="food-card pizza" onclick="openModal('https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=800&q=80', 'Margherita Pizza', '$14.99')">
+        <div class="food-card-img-wrapper"><span class="badge">Classic</span><img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=600&q=80" alt="Margherita"></div>
+        <div class="food-info"><h3>Margherita</h3><p>San Marzano tomato sauce, fresh mozzarella, and aromatic basil leaves.</p><span class="price">$14.99</span></div>
+      </div>
+
+      <div class="food-card pizza" onclick="openModal('https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?auto=format&fit=crop&w=800&q=80', 'Pepperoni Pizza', '$17.99')">
+        <div class="food-card-img-wrapper"><span class="badge">Best Seller</span><img src="https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?auto=format&fit=crop&w=600&q=80" alt="Pepperoni"></div>
+        <div class="food-info"><h3>Pepperoni Supreme</h3><p>Loaded with cured pepperoni slices and bubbly melted mozzarella.</p><span class="price">$17.99</span></div>
+      </div>
+
+      <div class="food-card pizza" onclick="openModal('https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80', 'Veg Supreme Pizza', '$16.49')">
+        <div class="food-card-img-wrapper"><img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80" alt="Veg Supreme"></div>
+        <div class="food-info"><h3>Veg Supreme</h3><p>Bell peppers, black olives, red onion, sweet corn, and mushrooms.</p><span class="price">$16.49</span></div>
+      </div>
+
+      <div class="food-card pizza" onclick="openModal('https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=80', 'Farm House Pizza', '$16.99')">
+        <div class="food-card-img-wrapper"><img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&q=80" alt="Farm House"></div>
+        <div class="food-info"><h3>Farm House</h3><p>Crispy fresh vegetables with creamy mozzarella on hand-tossed dough.</p><span class="price">$16.99</span></div>
+      </div>
+
+      <div class="food-card pizza" onclick="openModal('https://images.unsplash.com/photo-1573821663912-569905455b1c?auto=format&fit=crop&w=800&q=80', 'Paneer Tikka Pizza', '$17.49')">
+        <div class="food-card-img-wrapper"><span class="badge">Chef Special</span><img src="https://images.unsplash.com/photo-1573821663912-569905455b1c?auto=format&fit=crop&w=600&q=80" alt="Paneer Pizza"></div>
+        <div class="food-info"><h3>Paneer Tikka Pizza</h3><p>Spiced cottage cheese chunks, charred onions, and mint drizzles.</p><span class="price">$17.49</span></div>
+      </div>
+
+      <!-- BURGERS -->
+      <div class="food-card burger" onclick="openModal('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80', 'Gourmet Cheese Burger', '$12.99')">
+        <div class="food-card-img-wrapper"><span class="badge">Popular</span><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80" alt="Cheese Burger"></div>
+        <div class="food-info"><h3>Cheese Burger</h3><p>Angus beef patty with melted cheddar, pickles, and house sauce.</p><span class="price">$12.99</span></div>
+      </div>
+
+      <div class="food-card burger" onclick="openModal('https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?auto=format&fit=crop&w=800&q=80', 'Crispy Chicken Burger', '$13.49')">
+        <div class="food-card-img-wrapper"><img src="https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?auto=format&fit=crop&w=600&q=80" alt="Chicken Burger"></div>
+        <div class="food-info"><h3>Chicken Burger</h3><p>Golden fried chicken breast fillet with crisp lettuce and spicy mayo.</p><span class="price">$13.49</span></div>
+      </div>
+
+      <div class="food-card burger" onclick="openModal('https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80', 'Double Patty Burger', '$15.99')">
+        <div class="food-card-img-wrapper"><span class="badge">Monster</span><img src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=600&q=80" alt="Double Patty"></div>
+        <div class="food-info"><h3>Double Patty Stack</h3><p>Two grilled beef patties layered with double cheese and smoked bacon.</p><span class="price">$15.99</span></div>
+      </div>
+
+      <div class="food-card burger" onclick="openModal('https://images.unsplash.com/photo-1520072959219-c595dc870360?auto=format&fit=crop&w=800&q=80', 'Veggie Delight Burger', '$11.99')">
+        <div class="food-card-img-wrapper"><img src="https://images.unsplash.com/photo-1520072959219-c595dc870360?auto=format&fit=crop&w=600&q=80" alt="Veg Burger"></div>
+        <div class="food-info"><h3>Veggie Crunch Burger</h3><p>Herb-infused potato patty topped with tomatoes, onions, and herb dip.</p><span class="price">$11.99</span></div>
+      </div>
+
+      <div class="food-card burger" onclick="openModal('https://images.unsplash.com/photo-1610614819513-58e34989848b?auto=format&fit=crop&w=800&q=80', 'Zinger Crunch Burger', '$13.99')">
+        <div class="food-card-img-wrapper"><img src="https://images.unsplash.com/photo-1610614819513-58e34989848b?auto=format&fit=crop&w=600&q=80" alt="Zinger Burger"></div>
+        <div class="food-info"><h3>Zinger Crunch</h3><p>Extra-spicy crunchy fried chicken fillet with jalapenos and aioli.</p><span class="price">$13.99</span></div>
+      </div>
+
+      <!-- DRINKS -->
+      <div class="food-card drink" onclick="openModal('https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?auto=format&fit=crop&w=800&q=80', 'Classic Lime Mojito', '$9.99')">
+        <div class="food-card-img-wrapper"><span class="badge">Refreshing</span><img src="https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?auto=format&fit=crop&w=600&q=80" alt="Mojito"></div>
+        <div class="food-info"><h3>Classic Mojito</h3><p>Fresh mint leaves, muddled lime wedges, sparkling soda, and cane sugar.</p><span class="price">$9.99</span></div>
+      </div>
+
+      <div class="food-card drink" onclick="openModal('https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=800&q=80', 'Chilled Vintage Cola', '$4.99')">
+        <div class="food-card-img-wrapper"><img src="https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=600&q=80" alt="Cola"></div>
+        <div class="food-info"><h3>Artisanal Cola</h3><p>Served ice-cold with fresh citrus slices and crushed ice.</p><span class="price">$4.99</span></div>
+      </div>
+
+      <div class="food-card drink" onclick="openModal('https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=800&q=80', 'Fresh Orange Juice', '$6.99')">
+        <div class="food-card-img-wrapper"><img src="https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=600&q=80" alt="Orange Juice"></div>
+        <div class="food-info"><h3>Pure Orange Juice</h3><p>100% cold-pressed Valencia oranges served fresh without preservatives.</p><span class="price">$6.99</span></div>
+      </div>
+
+      <div class="food-card drink" onclick="openModal('https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=800&q=80', 'Belgian Chocolate Milkshake', '$8.49')">
+        <div class="food-card-img-wrapper"><span class="badge">Sweet</span><img src="https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=600&q=80" alt="Milkshake"></div>
+        <div class="food-info"><h3>Chocolate Milkshake</h3><p>Rich cocoa gelato blended with whole milk and whipped cream.</p><span class="price">$8.49</span></div>
+      </div>
+
+      <div class="food-card drink" onclick="openModal('https://images.unsplash.com/photo-1523371054106-bbf80586c38c?auto=format&fit=crop&w=800&q=80', 'Fresh Mint Lemonade', '$5.99')">
+        <div class="food-card-img-wrapper"><img src="https://images.unsplash.com/photo-1523371054106-bbf80586c38c?auto=format&fit=crop&w=600&q=80" alt="Lemonade"></div>
+        <div class="food-info"><h3>Lemon Mint Cooler</h3><p>Zesty squeezed lemons with fresh garden mint and sparkling water.</p><span class="price">$5.99</span></div>
+      </div>
+
+      <!-- STARTERS -->
+      <div class="food-card starter" onclick="openModal('https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=800&q=80', 'Truffle French Fries', '$8.99')">
+        <div class="food-card-img-wrapper"><span class="badge">Favorite</span><img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=600&q=80" alt="French Fries"></div>
+        <div class="food-info"><h3>Truffle French Fries</h3><p>Golden potato strips infused with white truffle oil and sea salt.</p><span class="price">$8.99</span></div>
+      </div>
+
+      <div class="food-card starter" onclick="openModal('https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?auto=format&fit=crop&w=800&q=80', 'Garlic Cheese Bread', '$10.49')">
+        <div class="food-card-img-wrapper"><img src="https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?auto=format&fit=crop&w=600&q=80" alt="Garlic Bread"></div>
+        <div class="food-info"><h3>Garlic Cheese Bread</h3><p>Toasted artisanal baguette spread with garlic butter & mozzarella.</p><span class="price">$10.49</span></div>
+      </div>
+
+      <div class="food-card starter" onclick="openModal('https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=800&q=80', 'Crispy Wings', '$11.99')">
+        <div class="food-card-img-wrapper"><img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=600&q=80" alt="Wings"></div>
+        <div class="food-info"><h3>Glazed Chicken Wings</h3><p>Tossed in sweet honey bbq sauce with buttermilk dip on the side.</p><span class="price">$11.99</span></div>
+      </div>
+
+      <div class="food-card starter" onclick="openModal('https://images.unsplash.com/photo-1541529086526-db283c563270?auto=format&fit=crop&w=800&q=80', 'Loaded Nachos', '$12.49')">
+        <div class="food-card-img-wrapper"><img src="https://images.unsplash.com/photo-1541529086526-db283c563270?auto=format&fit=crop&w=600&q=80" alt="Nachos"></div>
+        <div class="food-info"><h3>Supreme Nachos</h3><p>Tortilla chips topped with melted cheese, guacamole, and salsa.</p><span class="price">$12.49</span></div>
+      </div>
+
+      <!-- DESSERTS -->
+      <div class="food-card dessert" onclick="openModal('https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=800&q=80', 'Chocolate Lava Cake', '$11.49')">
+        <div class="food-card-img-wrapper"><span class="badge">Chef Pick</span><img src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=600&q=80" alt="Chocolate Cake"></div>
+        <div class="food-info"><h3>Chocolate Lava Cake</h3><p>Warm chocolate cake with a molten center, served with vanilla ice cream.</p><span class="price">$11.49</span></div>
+      </div>
+
+      <div class="food-card dessert" onclick="openModal('https://images.unsplash.com/photo-1587314168485-3236d6710814?auto=format&fit=crop&w=800&q=80', 'Fudge Brownie Sundae', '$9.99')">
+        <div class="food-card-img-wrapper"><img src="https://images.unsplash.com/photo-1587314168485-3236d6710814?auto=format&fit=crop&w=600&q=80" alt="Brownie"></div>
+        <div class="food-info"><h3>Fudge Brownie Sundae</h3><p>Dense dark chocolate brownie topped with roasted walnuts and fudge.</p><span class="price">$9.99</span></div>
+      </div>
+
+      <div class="food-card dessert" onclick="openModal('https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=800&q=80', 'Choco Chip Cookies', '$6.99')">
+        <div class="food-card-img-wrapper"><img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=600&q=80" alt="Cookies"></div>
+        <div class="food-info"><h3>Gourmet Cookies</h3><p>Warm baked chocolate chunk cookies with sea salt flakes.</p><span class="price">$6.99</span></div>
+      </div>
+
+      <div class="food-card dessert" onclick="openModal('https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?auto=format&fit=crop&w=800&q=80', 'Glazed Artisanal Donuts', '$8.49')">
+        <div class="food-card-img-wrapper"><img src="https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?auto=format&fit=crop&w=600&q=80" alt="Donuts"></div>
+        <div class="food-info"><h3>Glazed Donuts</h3><p>Fluffy brioche donuts coated in vanilla glaze and dark cocoa sprinkles.</p><span class="price">$8.49</span></div>
+      </div>
+
+      <div class="food-card dessert" onclick="openModal('https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=800&q=80', 'Artisanal Ice Cream Bowl', '$7.99')">
+        <div class="food-card-img-wrapper"><img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=600&q=80" alt="Ice Cream"></div>
+        <div class="food-info"><h3>Artisanal Ice Cream</h3><p>Three scoops of Madagascar vanilla, pistachio, and strawberry gelatos.</p><span class="price">$7.99</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Image Hover Zoom Modal -->
+  <div class="modal" id="imageModal" onclick="closeModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <span class="close-btn" onclick="closeModalDirect()">&times;</span>
+      
+      <div class="img-zoom-wrapper" id="zoomContainer">
+        <img id="modalImg" src="" alt="Dish Detail">
+      </div>
+      
+      <h3 id="modalTitle">Dish Title</h3>
+      <span class="modal-price" id="modalPrice">$0.00</span>
+    </div>
+  </div>
+
+  <!-- External JavaScript File -->
+  <script src="script.js"></script>
+</body>
+</html>
